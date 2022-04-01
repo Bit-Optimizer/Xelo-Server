@@ -1,0 +1,103 @@
+syntax = "proto3";
+package protos;
+option go_package = "./protos/pb";
+import "utils.proto";
+import "google/protobuf/timestamp.proto";
+
+message Spec{
+    string key = 1;
+    string value = 2;
+}
+
+message Product
+{
+    string id = 1;
+    uint32 price = 2;
+    string name = 3;
+    string description = 4;
+    string brand = 12;
+    string category = 13;
+    string subcategory = 14;
+    Address address = 5;
+    string seller = 6;
+    enum Status {
+        SOLD = 0;
+        UNSOLD = 1;
+    }
+    Status status = 7;
+    google.protobuf.Timestamp uploadDate  = 8;
+    repeated Spec spec = 9;
+    repeated string photourl = 10;
+    google.protobuf.Timestamp mfdate  = 11;
+    repeated string likes = 15;
+}
+
+message CreateProductRequest {
+    uint32 price = 1;
+    string name = 2;
+    string description = 3;
+    Address address = 4;
+    string seller = 5;
+    repeated Spec spec = 6;
+    repeated string photourl = 7;
+    google.protobuf.Timestamp mfdate  = 8;
+    string brand = 12;
+    string category = 13;
+    string subcategory = 14;
+}
+
+message UpdateProductRequest {
+    uint32 price = 2;
+    string name = 3;
+    string description = 4;
+    Address address = 5;
+    enum Status{
+        SOLD = 0;
+        UNSOLD = 1;
+    }
+    Status status = 7;
+    repeated Spec spec = 9;
+    repeated string photourl = 10;
+    google.protobuf.Timestamp mfdate  = 11;
+    string brand = 12;
+    string category = 13;
+    string subcategory = 14;
+}
+
+message DeleteProductRequest {
+    string id = 1;
+}
+
+message Products {
+    repeated Product product = 1;
+}
+
+message FilterRequest {
+    repeated Spec spec = 1;
+    uint32 min_price = 2;
+    uint32 max_price = 3;
+    string category = 4;
+    string subcategory = 5;
+    repeated string brand = 6;
+    Address address = 7;
+}
+
+message SearchRequest {
+    string val = 1;
+}
+
+message Pagination {
+    uint32 offset =1;
+    uint32 limit = 2;
+    string token = 3;
+}
+
+service ContentService{
+    rpc registerProduct(CreateProductRequest) returns (Product);
+    rpc updateProduct(UpdateProductRequest) returns (Product);
+    rpc deleteProduct(DeleteProductRequest) returns (Empty);
+    rpc getAllProducts(Empty) returns (Products);
+    rpc getSomeProducts(Pagination) returns (Products);
+    rpc getProductsByFilter(FilterRequest) returns (Products);
+    rpc getProductsBySearch(SearchRequest) returns (Products);
+}
