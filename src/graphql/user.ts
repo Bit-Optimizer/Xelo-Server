@@ -1,4 +1,6 @@
 import {
+  Args,
+  Ctx,
   Field,
   Float,
   InputType,
@@ -6,7 +8,8 @@ import {
   Query,
   Resolver,
 } from 'type-graphql';
-
+import 'reflect-metadata';
+import { ContextType } from './setup';
 @ObjectType()
 export class Address {
   @Field()
@@ -84,9 +87,11 @@ class UpdateUserInput {
   address: Address;
 }
 
-
-// @Resolver()
-// export class UserClass {
-//   @Query((returns) => User)
-//   getUser;
-// }
+@Resolver()
+export class UserClass {
+  @Query((returns) => User)
+  async getUser(@Ctx() { req, userClient }: ContextType): Promise<User> {
+    const res;
+    return new User();
+  }
+}

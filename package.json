@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "watch": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,8 +15,12 @@
     "apollo-server": "^3.6.7",
     "apollo-server-core": "^3.6.7",
     "apollo-server-express": "^3.6.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "graphql": "^15.3.0",
+    "grpc_tools_node_protoc_ts": "^5.3.2",
+    "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
